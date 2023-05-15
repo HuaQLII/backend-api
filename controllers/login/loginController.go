@@ -52,9 +52,8 @@ func (LC LoginController) LoginHandler(c *gin.Context) {
 	var count int64
 	global.DB.Model(&modles.User{}).Where("username = ? and password = ?", user.Username, user.Password).Count(&count)
 	if count == 0 {
-		c.JSON(http.StatusUnauthorized, gin.H{"error": "invalid username or password"})
+		c.JSON(http.StatusUnauthorized, gin.H{"status": "defeat", "code": 401, "message": "用户名或密码错误"})
 		return
 	}
-
-	c.JSON(http.StatusOK, gin.H{"message": "login success"})
+	c.JSON(http.StatusOK, gin.H{"status": "success", "code": 200, "message": "登录成功"})
 }
